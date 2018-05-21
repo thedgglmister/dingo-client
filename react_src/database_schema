@@ -1,0 +1,99 @@
+
+############# STATE ###############
+
+currentPage: enum[]
+
+userId: <int>
+
+profiles: {user_id: {f, l, i}, ...}
+
+invs = [{inv_id, from_id}, {...}, ...] --ordered
+
+currentGame: <int>
+
+games: [{gameId, squares: [{breed, img}, ...]}, ...] --ordered
+
+nots: {gameId: [{notId, fromId, type}], gameId: []} --ordered
+
+players: {gameId: [userid, userid], ...} --includes me first, otherwise ordered
+
+matches: {gameid: {userid:[], ...}, ...}
+
+topPlayers = [u_id, u_id, ...] --ordered
+
+notsMenuOpen: false
+
+addPlayersMenuOpen: false
+
+
+		
+
+
+
+########### NEW DATABASE ###############
+
+
+USERS
+
+u_id       first        last       email        pw        img (deafult "missing.png")        join_time (default current_timestamp)
+
+
+
+
+
+GAMES (need to delete when last person leaves game? Then delete all squareids with that gameid? On create game add one row here and a gamplayerid row for the creator)(add squares also)
+
+g_id     winner?    etc?
+
+
+
+
+
+INVS (remove when a player who sent the invitation leaves the game?)
+
+inv_id       g_id      from_id      to_id        sent_time       status?
+
+
+
+
+
+GAMEPLAYERS (on leave game, delete a row then all notifications to that gamplayer and all matches.) (on create new game for creator then on invite accept)
+
+g_id       u_id       blackout?      join_time      in_game
+
+
+
+
+
+DOGS
+
+dog_id       breed      img
+
+
+
+
+
+
+SQUARES (add this on create game)
+
+square_id      g_id       index         dog_id
+
+
+
+
+
+MATCHES (add after a match is made and delete when leave game)
+
+match_id     g_id        u_id          index
+
+
+
+
+
+NOTS (add when one is sent, remove when leave game)
+
+not_id         g_id          to_id          from_id          type        sent_time         read  
+
+
+
+
