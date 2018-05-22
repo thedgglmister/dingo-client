@@ -53,7 +53,8 @@ const InvitationsHeader = (props) => {
 		justifyContent: 'center',
 		textAlign: 'center',
 		position: 'relative',
-		fontSize: '5vh'
+		fontSize: '5vh',
+		borderBottom: '1px solid #264662'
 	};
 
 	const closeCSS = {
@@ -69,7 +70,7 @@ const InvitationsHeader = (props) => {
 	return (
 		<div style={css}>
 			<a style={closeCSS} onClick={props.onClick}>
-				&#8617;
+				&lang;
 			</a>
 			INVITATIONS
 		</div>
@@ -131,7 +132,7 @@ class InvitationsListContainer extends Component {
 			)
 		).then(
 			(data) => {
-				this.props.acceptInv(invId, data);
+				this.props.acceptInv(data);
 			}
 		).catch(
 			(error) => console.log("Network Error: " + error.message) //put in alert or errorMsg? 
@@ -152,11 +153,11 @@ class InvitationsListContainer extends Component {
 			}
 		).then(
 			(response) => (
-				(response.status >= 200 && response.status < 300) ? response : Promise.reject(new Error(response.statusText))
+				(response.status >= 200 && response.status < 300) ? response.json() : Promise.reject(new Error(response.statusText))
 			)
 		).then(
-			(response) => {
-				this.props.declineInv(invId);
+			(data) => {
+				this.props.declineInv(data.invs);
 			}
 		).catch(
 			(error) => console.log("Network Error: " + error.message) //put in alert or errorMsg? 
@@ -190,9 +191,13 @@ InvitationsListContainer = connect(mapStateToInvitationsListProps, mapDispatchTo
 const InvitationsList = (props) => {
 //make enough empty slots to fit in screen, fill it top few with items...?
 
+	const css = {
+		height: '90vh',
+		overflow: 'scroll',
+	};
 
 	return (
-		<div>
+		<div style={css}>
 			{props.items}
 		</div>
 	);

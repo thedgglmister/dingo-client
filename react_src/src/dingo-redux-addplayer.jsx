@@ -53,7 +53,7 @@ const AddPlayerHeader = (props) => {
 	const css = {
 		width: '100vw',
 		height: '10vh',
-		backgroundColor: 'orange',
+		backgroundColor: 'steelblue',
 		position: 'relative',
 		color: '#fff',
 		fontSize: '8vw',
@@ -61,7 +61,9 @@ const AddPlayerHeader = (props) => {
 		flexDirection: 'column',
 		justifyContent: 'center',
 		textAlign: 'center',
+		borderBottom: '1px solid #264662'
 	};
+
 
 	return (
 		<div style={css}>
@@ -106,7 +108,7 @@ const CancelButton = (props) => {
 
 	return (
 		<a style={css} onClick={props.onClick}>
-			&#8617;
+			&lang;
 		</a>
 	);
 }
@@ -187,13 +189,17 @@ SearchContainer = connect(mapStateToSearchProps, mapDispatchToSearchProps)(Searc
 const Search = (props) => {
 
 	const css = {
-		borderBottom: '1px solid lightgrey',
+		borderBottom: '1px solid grey',
 		padding: '10px',
+
 	};
 
 	const inputCSS = {
 		width: '75vw',
 		marginLeft: '5px',
+		border: 'none',
+		height:'3vh',
+		fontSize: '2vh',
 	}
 
 	return (
@@ -236,7 +242,8 @@ const mapStateToTopPlayersProps = (state) => {
 				return topProfiles;
 			}, 
 			[]
-		)
+		),
+		otherCount: state.otherPlayers ? state.otherPlayers.length : 0,
 	});
 };
 
@@ -248,19 +255,20 @@ class TopPlayersContainer extends Component {
 		}
 
 		const searchItems = this.props.topProfiles.map(
-			(profile) => (
+			(profile, index) => (
 				<SearchItemContainer
 					key={profile.userId}
 					inviteeId={profile.userId}
 					name={profile.firstName + " " + profile.lastName}
 					img={profile.img}
+					last={this.props.otherCount > 0 && index == this.props.topProfiles.length - 1}
 				/>
 			)
 		);
 
 		return (
 			<div>
-				<SearchPlayersHeader 
+				<MenuHeader 
 					title="Top People"
 				/>
 				{searchItems}
@@ -275,7 +283,7 @@ TopPlayersContainer = connect(mapStateToTopPlayersProps, null)(TopPlayersContain
 
 
 
-const SearchPlayersHeader = (props) => {
+const MenuHeader = (props) => {
 
 	const css = {
 		backgroundColor: 'lightgrey',
@@ -344,6 +352,7 @@ class SearchItemContainer extends Component {
 				name={this.props.name}
 				img={this.props.img}
 				onClick={(e) => this.handleSendInvite(e, this.props.inviteeId)}
+				last={this.props.last}
 			/>
 		);
 	}
@@ -358,7 +367,7 @@ const SearchItem = (props) => {
 		justifyContent: 'flex-start',
 		marginLeft: '5vw',
 		width: '95vw',
-		borderBottom: '1px solid lightgrey',
+		borderBottom: (props.last ? 'none' : '1px solid lightgrey'),
 		padding: '10px 0 10px 0',
 	};
 
@@ -462,7 +471,7 @@ class OtherPlayersContainer extends Component {
 
 		return (
 			<div>
-				<SearchPlayersHeader 
+				<MenuHeader 
 					title="Other People"
 				/>
 				{searchItems}
@@ -496,5 +505,5 @@ const SeeMoreResults = (props) => {
 
 
 
-export { AddPlayerMenu };
+export { AddPlayerMenu, MenuHeader };
 

@@ -9,17 +9,21 @@ import CurrentPage from './dingo-redux-currentpage'
 
 import * as actions from './redux-action-creators'
 
+localStorage.removeItem('userId'); //temp
+
+//statusBar.hide(); figure out how to use this plugin
 
 //persistedState from local storage can go as second arg to createStore! but need to check server still... if offline?
 
 //make sure in search players  a player already in game doesnt show up.. dont wantt o invite to game if already in.
 
-
 class App extends Component { 
 
 	componentDidMount() {
-		if (this.props.userId != null) {
+		const storedId = localStorage.getItem('userId');
+		if (storedId != null) {
 			this.props.goToSplash();
+			this.props.updateUserId(parseInt(storedId));
 		}
 	}
 
@@ -34,13 +38,17 @@ class App extends Component {
 
 const mapStateToAppProps = (state) => ({
 	currentPage: state.currentPage,
-	userId: state.userId,
 });
 
 const mapDispatchToAppProps = (dispatch) => ({
 	goToSplash: () => {
 		dispatch(
 			actions.changePage("SPLASH")
+		);
+	},
+	updateUserId: (userId) => {
+		dispatch(
+			actions.updateUserId(userId)
 		);
 	},
 });
@@ -60,13 +68,7 @@ App = connect(mapStateToAppProps, mapDispatchToAppProps)(App);
 //main
 
 render( 
-	<Provider store={createStore(
-		dingoReducer, 
-		{
-			userId: parseInt(localStorage.getItem("userId")),
-			currentPlayer: parseInt(localStorage.getItem("userId")),
-		}
-	)}>
+	<Provider store={createStore(dingoReducer)}>
 		<App />
 	</Provider>,
 	document.getElementById('root')

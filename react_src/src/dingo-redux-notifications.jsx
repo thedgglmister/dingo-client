@@ -4,6 +4,8 @@ import * as actions from './redux-action-creators'
 
 import Avatar from './dingo-redux-avatar'
 
+import { MenuHeader } from './dingo-redux-addplayer'
+
 const server_url = "https://dingo-test.herokuapp.com";
 
 
@@ -33,7 +35,7 @@ const NotsHeader = (props) => {
 	const css = {
 		width: '100vw',
 		height: '10vh',
-		backgroundColor: 'orange',
+		backgroundColor: 'steelblue',
 		position: 'relative',
 		color: '#fff',
 		fontSize: '8vw',
@@ -41,6 +43,7 @@ const NotsHeader = (props) => {
 		flexDirection: 'column',
 		justifyContent: 'center',
 		textAlign: 'center',
+		borderBottom: '1px solid #264662',
 	};
 
 	return (
@@ -88,7 +91,7 @@ const CancelButton = (props) => {
 
 	return (
 		<a style={css} onClick={props.onClick}>
-			&#8617;
+			&lang;
 		</a>
 	);
 }
@@ -116,6 +119,10 @@ const mapStateToNotsListProps = (state) => ({
 			msg: formatMsg(not.type, state.profiles[not.fromId].firstName),
 			read: not.read
 		})
+	),
+	unreadCount: state.nots[state.currentGame].reduce(
+		(total, not) => total + (not.read ? 0 : 1),
+		0
 	),
 	gameId: state.currentGame,
 	userId: state.userId,
@@ -155,31 +162,83 @@ class NotsListContainer extends Component {
 	}
 
 	render() {
+
+
 		const notsItems = this.props.nots.map(
-			(not) => (
+			(not, index) => (
 				<NotsItem
 					key={not.notId}				
 					img={not.img}
 					msg={not.msg}
 					read={not.read}
+					lastUnread={index == this.props.unreadCount - 1}
 				/>
 			)
 		);
 
-		return (
-			<NotsList
-				items={notsItems}
-			/>
-		);
+		const css = {
+			height: '90vh',
+			overflow: 'scroll',
+		};
+
+		if (this.props.nots.length == 0) {
+			return <NoNotifications />;
+		}
+		else if (this.props.unreadCount == 0) {
+			return (
+				<div style={css}>
+					<MenuHeader
+						title="Old Notifications"
+					/>
+					<NotsList
+						items={notsItems}
+					/>
+				</div>
+			);
+		}
+		else {
+			return (
+				<div style={css}>
+					<MenuHeader
+						title="New Notifications"
+					/>
+					<NotsList
+						items={notsItems.slice(0, this.props.unreadCount)}
+					/>
+					<MenuHeader
+						title="Old Notifications"
+					/>
+					<NotsList
+						items={notsItems.slice(this.props.unreadCount)}
+					/>
+				</div>
+			);
+		}
 	}
 }
 NotsListContainer = connect(mapStateToNotsListProps, mapDispatchToNotsListProps)(NotsListContainer);
 
 
+const NoNotifications = (props) => {
+
+	const css = {
+		height: '80vh',
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center',
+		fontSize: '10vw',
+	};
+
+	return (
+		<div style={css}>
+			No Notifications
+		</div>
+	);
+}
+
 const NotsList = (props) => {
 //make enough empty slots to fit in screen, fill it top few with items...?
-
-
 	return (
 		<div>
 			{props.items}
@@ -197,24 +256,23 @@ const NotsItem = (props) => {
 	const css = {
 		display: 'flex',
 		justifyContent: 'flex-start',
-//		marginLeft: '5vw',
-//		width: '95vw',
-		borderBottom: '1px solid lightgrey',
-		padding: '10px 0 10px 5vw',
-		backgroundColor: props.read ? '#eee' : '#fff',
+		marginLeft: '5vw',
+		width: '95vw',
+		borderBottom: (props.lastUnread ? 'none' : '1px solid lightgrey'),
+		padding: '10px 0',
 	};
 
 	const nameCSS = {
 		display: 'flex',
 		alignItems: 'center',
-		marginLeft: '60px',
+		marginLeft: '40px',
 	};
 
 	return (
 		<div style={css}>
 			<Avatar
 				img={props.img}
-				width='10vw'
+				width='12vw'
 			/>
 			<div style={nameCSS}>
 				{props.msg}

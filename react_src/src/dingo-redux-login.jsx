@@ -3,11 +3,10 @@ import { connect } from 'react-redux'
 
 import * as actions  from './redux-action-creators'
 
-import Route from './dingo-redux-button'
-
-import { Input } from './dingo-redux-signup'
+import { Input, LoginSignupToggleButton } from './dingo-redux-signup'
 
 const server_url = "https://dingo-test.herokuapp.com";
+
 
 
 const LoginPage = (props) => ( //presentational
@@ -31,15 +30,14 @@ const LoginHeader = (props) => { //presentational
 		justifyContent: 'center',
 		textAlign: 'center',
 		position: 'relative',
-		fontSize: '5vh'
+		fontSize: '5vh',
+		borderBottom: '1px solid #264662'
 	};
 
 	return (
 		<div style={css}>
 			Log In
-			<Route to="SIGNUP">
-				<ToSignUpButton />
-			</Route>
+			<SignupButtonContainer />
 		</div>
 	);
 }
@@ -48,25 +46,31 @@ const LoginHeader = (props) => { //presentational
 
 
 
+const mapDispatchToSignupButtonProps = (dispatch) => ({
+	handleClick: (e) => {
+		e.preventDefault();
+		dispatch(
+			actions.changePage("SIGNUP")
+		);
+	}
+});
 
-
-
-const ToSignUpButton = (props) => {   //presentational
-	const css = {
-		position: 'absolute',
-		right: '0',
-		top: '0',
-		padding: '10px',
-		fontSize: '2vh',
-		color: '#fff',
-	};
-
-	return (
-		<button style={css} onClick={props.handleClick}>
-			Sign Up
-		</button>
-	);
+class SignupButtonContainer extends Component {
+	render() {
+		return (
+			<LoginSignupToggleButton 
+				text="Sign Up"	
+				onClick={this.props.handleClick}
+			/>
+		);
+	}
 }
+SignupButtonContainer = connect(null, mapDispatchToSignupButtonProps)(SignupButtonContainer);
+
+
+
+
+
 
 
 
@@ -195,43 +199,46 @@ LoginFormContainer = connect(null, mapDispatchToLoginFormContainerProps)(LoginFo
 
 const LoginForm = (props) => {
 
-	const button_css = {
+	const LoginCSS = {
+		display: 'block',
 		backgroundColor: 'steelblue',
 		color: 'white',
-		width: '25vw',
-		height: '6vh',
+		width: '20vw',
+		height: '3vh',
 		borderRadius: '5px',
-		margin: '20px',
+		margin: '10px auto',
+		padding: '4px',
 	};
 
-	const error_css = {
+	const errorCSS = {
 		color: 'red',
 		height: '3vh',
 	};
 
 	return (
 		<form>
-			<p style={error_css}>{props.errorMsg}</p>
+			<p style={errorCSS}>{props.errorMsg}</p>
 			<Input
 				name="email"
-				value={props.email}
+				value={props.email.toLowerCase()}
 				placeholder="Email"
 				onChange={props.handleInputChange}
 			/>
 			<br />
 			<Input
 				name="password"
+				password={true}
 				value={props.password}
 				placeholder="Password"
 				onChange={props.handleInputChange}
 			/>
 			<br />
-			<button 
-				style={button_css} 
+			<a 
+				style={LoginCSS} 
 				onClick={props.handleSubmitButtonClick}
 			>
 				Log In
-			</button>
+			</a>
 		</form>
 	);
 }

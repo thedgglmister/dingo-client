@@ -86,7 +86,7 @@ const Splash = (props) => {
 
 	return (
 		<div style={container_css}>
-			<img style={img_css} src={"../img/splash" + randint + ".png"} />
+			<img style={img_css} src={"img/splash" + randint + ".png"} />
 		</div>
 	);
 }

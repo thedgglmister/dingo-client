@@ -22,11 +22,8 @@ const HomePage = (props) => {
 }
 
 
-const mapStateToHomeHeaderProps = (state) => ({ //temp just for name or use this container to pass into buttons as well
-	name: state.profiles[state.userId].firstName + " " + state.profiles[state.userId].lastName,
-});
 
-let HomeHeader = (props) => { //let just for now because const cant be connected.
+const HomeHeader = (props) => { 
 
 	const css = {
 		display: 'flex',
@@ -34,9 +31,10 @@ let HomeHeader = (props) => { //let just for now because const cant be connected
 		backgroundColor: 'steelblue',
 		height: '10vh',
 		color: '#fff',
+		borderBottom: '1px solid #264662'
 	};
 
-	const title_css = {
+	const titleCSS = {
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'center',
@@ -47,14 +45,13 @@ let HomeHeader = (props) => { //let just for now because const cant be connected
 	return (
 		<div style={css}>
 			<ProfileButtonContainer />
-			<div style={title_css}>
-				{props.name}
+			<div style={titleCSS}>
+				DINGO
 			</div>	
 			<InvsButtonContainer />
 		</div>
 	);	
 }
-HomeHeader = connect(mapStateToHomeHeaderProps, null)(HomeHeader);
 
 
 const mapStateToInvsButtonProps = (state) => ({
@@ -85,7 +82,7 @@ InvsButtonContainer = connect(mapStateToInvsButtonProps, mapDispatchToInvsButton
 
 const HeaderButton = (props) => {
 	const css = {
-		width: '15vw',
+		width: props.width ? props.width : '15vw',
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'center',
@@ -107,7 +104,7 @@ const HeaderButton = (props) => {
 const Alert = (props) => {
 
 	const css = {
-		backgroundColor: 'red',
+		backgroundColor: '#c00',
 		borderRadius: '100%',
 		width: '6vw',
 		height: '6vw',
@@ -248,6 +245,11 @@ GamesListContainer = connect(mapStateToGamesListProps, null)(GamesListContainer)
 
 const GamesList = (props) => {
 
+	const css = {
+		height: '80vh',
+		overflow: 'scroll',
+	};
+
 	const gamesListItems = props.games.map(
 		(game) => (
 			<GamesListItemContainer 
@@ -258,7 +260,7 @@ const GamesList = (props) => {
 	);
 
 	return (
-		<div>
+		<div style={css}>
 			{gamesListItems}
 		</div>
 	);
@@ -280,14 +282,14 @@ const mapDispatchToGamesListItemProps = (dispatch, ownProps) => ({
 			actions.goToGame(ownProps.gameId)
 		);
 	},
-	goToNots: (e) => {
+	goToNots: (e) => { //eventually just put on click on container of playersarea and nots alert area
 		e.preventDefault();
 		dispatch(
 			actions.goToGame(ownProps.gameId)
 		);
-		dispatch(
-			actions.toggleNots()
-		);
+	//	dispatch(
+	//		actions.toggleNots()
+	//	);
 	},	
 });
 
@@ -389,6 +391,7 @@ const LeaveGameButton = (props) => {
 		flexDirection: 'column',
 		justifyContent: 'center',
 		textAlign: 'center',
+		color: 'grey',
 	};
 
 	return (
@@ -396,7 +399,7 @@ const LeaveGameButton = (props) => {
 			style={css}
 			onClick={props.onClick}
 		>
-			X
+			&times;
 		</a>
 	);
 }
@@ -407,7 +410,6 @@ const GamesListItemPlayers = (props) => {
 	const css = {
 		display: 'flex',
 		width: '70vw',
-		borderRight: '1px solid lightgrey', //temp?
 		overflow: 'scroll',
 		borderBottom: '1px solid lightgrey',
 	};
@@ -468,7 +470,8 @@ const GamesListItemNotificationsButton = (props) => {
 		width: '10vw',
 		height: '10vw',
 		borderRadius: '100%',
-		backgroundColor: (props.unreadNotsCount > 0 ? 'red' : 'lightgrey'),
+		color: (props.unreadNotsCount > 0 ? '#fff' : '#000'),
+		backgroundColor: (props.unreadNotsCount > 0 ? '#c00' : 'transparent'),
 	};
 
 	return (

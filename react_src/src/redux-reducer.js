@@ -57,9 +57,7 @@ const invs = (state = [], action) => {
 			return state.concat(action.invs);
 		case "ACCEPT_INV":
 		case "DECLINE_INV":
-			return state.filter(
-				(inv) => (inv.invId != action.invId)
-			);
+			return action.invs;
 		default:
 			return state;
 	}	

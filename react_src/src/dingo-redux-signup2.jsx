@@ -19,24 +19,26 @@ import React from 'react'; //need this?
 
 const ProfilePhotoForm = (props) => {
 
-	const img_css = {
+	const imgCSS = {
 		borderRadius: '100%',
 		width: '60vw',
 		height: '60vw',
 	};
 
-	const button_css = {
+	const signupCSS = {
+		display: 'block',
 		backgroundColor: 'steelblue',
 		color: 'white',
-		width: '25vw',
-		height: '6vh',
+		width: '20vw',
+		height: '3vh',
 		borderRadius: '5px',
-		margin: '20px',
+		margin: '10px auto',
+		padding: '4px',
 	};
 
 	return (
 		<form>
-			<img style={img_css} src={props.img} onClick={props.handlePhotoClick}/>
+			<img style={imgCSS} src={props.img} onClick={props.handlePhotoClick}/>
 			<p>Upload Profile Picture</p>
 			<input id="testtt" style={{opacity: '0'}} name="img" type="file" accept="image/*" onChange={(e) => { //temp
 				if (e.target.files[0]) {
@@ -49,9 +51,9 @@ const ProfilePhotoForm = (props) => {
 			    }
 			}} />
 			<br />
-			<button style={button_css} onClick={props.handleSubmitButtonClick}>
+			<a style={signupCSS} onClick={props.handleSubmitButtonClick}>
 				Sign Up
-			</button>
+			</a>
 		</form>
 	);
 };

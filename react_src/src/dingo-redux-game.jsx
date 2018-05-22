@@ -16,7 +16,6 @@ const server_url = "https://dingo-test.herokuapp.com";
 const mapStateToGamePageProps = (state) => ({
 	addPlayerMenuOpen: state.addPlayerMenuOpen,
 	notsMenuOpen: state.notsMenuOpen,
-	gameId: state.currentGame, //temp
 	userId: state.userId,
 });
 
@@ -38,7 +37,7 @@ class GamePage extends Component {
 	render() {
 		return (
 			<div>
-				<GameHeader gameId={this.props.gameId} /> {/*gameId temp*/}
+				<GameHeader />
 				<GameBodyContainer />
 				{this.props.addPlayerMenuOpen && <AddPlayerMenu />}
 				{this.props.notsMenuOpen && <NotsMenu />}
@@ -61,6 +60,8 @@ const GameHeader = (props) => {
 		backgroundColor: 'steelblue',
 		height: '10vh',
 		color: '#fff',
+		borderBottom: '1px solid #264662',
+		paddingRight: '3vw',
 	};
 
 	const titleCSS = {
@@ -83,7 +84,7 @@ const GameHeader = (props) => {
 		<div style={css}>
 			<ReturnButtonContainer />
 			<div style={titleCSS}>
-				{props.gameId} {/*temp*/}
+				DINGO
 			</div>	
 			<div style={menuButtonsCSS}>
 				<AddPlayerButtonContainer />
@@ -114,7 +115,7 @@ const mapDispatchToNotsButtonProps = (dispatch) => ({
 class NotsButtonContainer extends Component {
 	render() {
 		return (
-			<HeaderButton onClick={this.props.onClick}>
+			<HeaderButton width="10vw" onClick={this.props.onClick}>
 				{this.props.unreadNotsCount > 0 ? <Alert count={this.props.unreadNotsCount} /> : 'N'}
 			</HeaderButton>
 		);
@@ -136,7 +137,7 @@ const mapDispatchToAddPlayerButtonProps = (dispatch) => ({
 class AddPlayerButtonContainer extends Component {
 	render() {
 		return (
-			<HeaderButton onClick={this.props.onClick}>
+			<HeaderButton width="10vw" onClick={this.props.onClick}>
 				+
 			</HeaderButton>
 		);
@@ -159,7 +160,7 @@ class ReturnButtonContainer extends Component {
 	render() {
 		return (
 			<HeaderButton onClick={this.props.returnHome}>
-				&#8617;	
+				&lang;	
 			</HeaderButton>
 		);
 	}
@@ -248,7 +249,7 @@ const Rolodex = (props) => {
 		overflow: 'hidden',
 	};
 
-	const left = 42 - (props.currentIndex * 8) + 'vw';
+	const left = 42 - (props.currentIndex * 8) - (props.currentIndex + 0.5) + 'vw'; //extra subtraction of (props.currentIndex + 0.5) is for the 0.5vw avatar padding
 	const rolodexCSS = {
 		position: 'relative',
 		left: left,
@@ -318,7 +319,7 @@ const Arrow = (props) => {
 		fontSize: '10vw',
 		textAlign: 'center',
 		opacity: props.hide ? '0' : '1',
-		color: 'grey',
+		color: '#333',
 	};
 
 	return (
@@ -352,7 +353,6 @@ const Card = (props) => {
 		  gridGap: '1vw',
 		  gridTemplateColumns: 'repeat(5, 16vw)',
 		  gridTemplateRows: 'repeat(5, 16vw)',
-		  backgroundColor: 'grey', //temp
 	};
 
 	return (
@@ -416,9 +416,9 @@ class SquareContainer extends Component {
 //mobiile
 
 		navigator.camera.getPicture(
-			this.temp_for_mobile, 
+			this.temp_checkBreed, 
 			null, //?
-			{quality: 50, allowEdit: false, sourceType: 0} ///true allows zooming? quality? //1 for camera, 0 for library
+			{quality: 50, allowEdit: true, sourceType: 0, destinationType: 0} ///true allows zooming? quality? //1 for camera, 0 for library
 		); 
 	}
 
@@ -433,23 +433,18 @@ class SquareContainer extends Component {
 	    }
 	}
 
-	temp_for_mobile(imgURI) {
-		const reader = new FileReader();
-		const that = this;
-		reader.onload = (e) => {
-			that.temp_checkBreed(e.target.result);
-		};
-		reader.readAsDataURL(imgURI);
-	}
+	temp_checkBreed(imgData) { ////eventually checkBreed should match this. or just keep it.
 
-	temp_checkBreed(img) { ////eventually checkBreed should match this. or just keep it.
+		if (imgData.slice(0, 22) != "data:image/jpg;base64,") {
+			imgData = "data:image/jpg;base64," + imgData;
+		}
 
 		const requestData = {};
 		requestData.gameId = this.props.gameId;
 		requestData.userId = this.props.userId;
 		requestData.index = this.props.index;
 		requestData.breed = this.props.breed;
-		requestData.img = img;
+		requestData.img = imgData;
 
 		fetch(
 			server_url + "/validate_breed", 
@@ -531,7 +526,7 @@ const Square = (props) => {
 	const css = {
 		width: '100%',
 		height: '100%',
-		position: 'relative'
+		position: 'relative',
 	};
 
 	const matchCSS = {
@@ -557,7 +552,9 @@ const Square = (props) => {
 		justifyContent: 'center',
 		textAlign: 'center',
 		fontSize: '2vw',
-		backgroundColor: 'lightgrey',
+		backgroundColor: 'grey',
+		color: '#fff',
+		borderRadius: '4px',
 	};
 
 	return (
@@ -566,7 +563,7 @@ const Square = (props) => {
 			<div style={tempCSS} onClick={props.onClick}>
 				{props.breed}
 			</div>
-			<img style={matchCSS} src="../img/match.png" />
+			<img style={matchCSS} src="img/match.png" />
 		</div>
 	);
 

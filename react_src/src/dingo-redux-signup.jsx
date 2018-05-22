@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import * as actions  from './redux-action-creators'
 
-import Route from './dingo-redux-button'
 import ProfilePhotoForm from './dingo-redux-signup2'
 
 //make a reusable button container component that takes a to prop and onclick does a changePage. renders props.children for presentation of buttons.
@@ -33,27 +32,44 @@ const SignUpHeader = (props) => { //presentational
 		justifyContent: 'center',
 		textAlign: 'center',
 		position: 'relative',
-		fontSize: '5vh'
+		fontSize: '5vh',
+		borderBottom: '1px solid #264662'
 	};
 
 	return (
 		<div style={css}>
 			Sign Up
-			<Route to="LOGIN">
-				<ToLoginButton />
-			</Route>
+			<LoginButtonContainer />
 		</div>
 	);
 }
 
 
+const mapDispatchToLoginButtonProps = (dispatch) => ({
+	handleClick: (e) => {
+		e.preventDefault();
+		dispatch(
+			actions.changePage("LOGIN")
+		);
+	}
+});
+
+class LoginButtonContainer extends Component {
+	render() {
+		return (
+			<LoginSignupToggleButton 
+				text="Log In"	
+				onClick={this.props.handleClick}
+			/>
+		);
+	}
+}
+LoginButtonContainer = connect(null, mapDispatchToLoginButtonProps)(LoginButtonContainer);
 
 
 
 
-
-
-const ToLoginButton = (props) => {   //presentational
+const LoginSignupToggleButton = (props) => {   //presentational
 	const css = {
 		position: 'absolute',
 		right: '0',
@@ -64,9 +80,9 @@ const ToLoginButton = (props) => {   //presentational
 	};
 
 	return (
-		<button style={css} onClick={props.handleClick}>
-			Log In
-		</button>
+		<a style={css} onClick={props.onClick}>
+			{props.text}
+		</a>
 	);
 }
 
@@ -113,13 +129,13 @@ class SignUpFormContainer extends Component {
 		this.state.email = "";
 		this.state.password = "";
 		this.state.confirmPassword = "";
-		this.state.img = "../img/missing.png";
+		this.state.img = "img/missing.png";
 
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleNextButtonClick = this.handleNextButtonClick.bind(this);
 		this.handleSubmitButtonClick = this.handleSubmitButtonClick.bind(this);
 		this.temp_for_mobile = this.temp_for_mobile.bind(this); //doesnt need bind?
-		this.handlePhotoClick = this.handleNextButtonClick.bind(this);
+		this.handlePhotoClick = this.handlePhotoClick.bind(this);
 	}
 
 	handleInputChange(e) {
@@ -144,18 +160,15 @@ class SignUpFormContainer extends Component {
 		navigator.camera.getPicture(
 			this.temp_for_mobile, 
 			null, //?
-			{quality: 50, allowEdit: true, sourceType: 0} ///true allows zooming? quality? //1 for camera, 0 for library
+			{quality: 50, allowEdit: true, sourceType: 0, destinationType: 0} ///true allows zooming? quality? //1 for camera, 0 for library
 		);		
 	}
 
-	temp_for_mobile(imgURI) {
-		const reader = new FileReader();
-		reader.onload = (e) => {
-			this.setState({
-				img: e.result,
-			})
-		}
-		reader.readAsDataURL(imgURI);
+	temp_for_mobile(imgData) {
+		imgData = "data:image/jpg;base64," + imgData;
+		this.setState({
+			img: imgData,
+		})
 	}
 
 	handleNextButtonClick(e) {
@@ -283,13 +296,15 @@ const UserInfoForm = (props) => {
 		height: '3vh',
 	};
 
-	const buttonCSS = {
+	const nextCSS = {
+		display: 'block',
 		backgroundColor: 'steelblue',
 		color: 'white',
-		width: '25vw',
-		height: '6vh',
+		width: '20vw',
+		height: '3vh',
 		borderRadius: '5px',
-		margin: '20px',
+		margin: '10px auto',
+		padding: '4px',
 	};
 
 	return (
@@ -311,13 +326,14 @@ const UserInfoForm = (props) => {
 			<br />
 			<Input 
 				name="email"
-				value={props.email}
+				value={props.email.toLowerCase()}
 				placeholder="Email"
 				onChange={props.handleInputChange}
 			/>
 			<br />
 			<Input 
 				name="password"
+				password={true}
 				value={props.password}
 				placeholder="Password"
 				onChange={props.handleInputChange}
@@ -325,17 +341,18 @@ const UserInfoForm = (props) => {
 			<br />
 			<Input 
 				name="confirmPassword"
+				password={true}
 				value={props.confirmPassword}
 				placeholder="Confirm Password"
 				onChange={props.handleInputChange}
 			/>
 			<br />
-			<button 
-				style={buttonCSS} 
+			<a 
+				style={nextCSS} 
 				onClick={props.handleNextButtonClick}
 		 	>
 				Next
-			</button>
+			</a>
 		</form>
 
 	);
@@ -345,21 +362,21 @@ const UserInfoForm = (props) => {
 
 const Input = (props) => {
 
-	const input_css = {
+	const inputCSS = {
 		width: '80vw',
 		height: '5vh',
 		margin: '5px',
 		borderRadius: '4px',
 		border: 'none',
 		fontSize: '1em',
-		padding: '3px',
+		padding: '0 10px',
 	};
 
 	return (
 		<input
-			style={input_css}
+			style={inputCSS}
 			name={props.name}
-			type="text"
+			type={props.password ? "password" : "text"}
 			value={props.value}
 			placeholder={props.placeholder}
 			onChange={props.onChange}
@@ -372,4 +389,4 @@ const Input = (props) => {
 
 
 
-export { SignUpPage, Input };
+export { SignUpPage, Input, LoginSignupToggleButton };

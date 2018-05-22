@@ -8,6 +8,7 @@ const Avatar = (props) => { //what if name overflows size?
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'stretch', //default?
+		padding: '0.5vw',
 	};
 
 	const nameCSS = {
@@ -18,7 +19,7 @@ const Avatar = (props) => { //what if name overflows size?
 	const imgCSS = {
 		width: props.width,
 		height: props.width,
-		borderRadius: '100%',
+		borderRadius: '10px',
 	};
 
 	return (

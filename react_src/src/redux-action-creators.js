@@ -50,20 +50,20 @@ export const updateProfiles = (newProfiles) => ({
 	newProfiles: newProfiles
 });
 
-export const acceptInv = (invId, data) => ({
+export const acceptInv = (data) => ({
 	type: "ACCEPT_INV",
-	invId: invId,
 	games: data.games,
 	matches: data.matches,
 	players: data.players,
 	topPlayers: data.topPlayers,
 	nots: data.nots,
-	profiles: data.profs
+	profiles: data.profs,
+	invs: data.invs,
 });
 
-export const declineInv = (invId) => ({
+export const declineInv = (invs) => ({
 	type: "DECLINE_INV",
-	invId: invId,
+	invs: invs,
 });
 
 export const updatePattern = (pattern) => ({

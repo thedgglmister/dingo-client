@@ -10,6 +10,10 @@ const server_url = "https://dingo-test.herokuapp.com";
 
 //need to validate here. alpha chracsters with spaces and hyphens, email validation? check if email is used?
 
+//need to put profile info above photo to even see the save button turn on.
+
+//make profile and signup2 pictures squarisj instead of circles
+
 
 
 const mapStateToProfilePageProps = (state) => ({
@@ -83,20 +87,16 @@ class ProfilePage extends Component {
 		navigator.camera.getPicture(
 			this.temp_for_mobile, 
 			null, //?
-			{quality: 50, allowEdit: true, sourceType: 0} ///true allows zooming? quality? //1 for camera, 0 for library
+			{quality: 50, allowEdit: true, sourceType: 0, destinationType: 0} ///true allows zooming? quality? //1 for camera, 0 for library
 		);
 	}
 
-	temp_for_mobile(imgURI) {
-		const reader = new FileReader();
-		const that = this;
-		reader.onload = (e) => {
-			that.setState({
-				img: event.target.result, 
-				imgChange: true
-			});
-		};
-		reader.readAsDataURL(imgURI);
+	temp_for_mobile(imgData) {
+		imgData = "data:image/jpg;base64," + imgData;
+		this.setState({
+			img: imgData,
+			imgChange: true
+		});
 	}
 
 	temp_handle_img_change(e) {
@@ -181,11 +181,11 @@ const ProfileHeader = (props) => {
 		backgroundColor: 'steelblue',
 		height: '10vh',
 		color: '#fff',
-
+		borderBottom: '1px solid #264662'
 	};
 
 	const saveCSS = {
-		color: (props.save ? 'white' : 'lightgrey'),
+		color: (props.save ? 'white' : 'steelblue'),
 	};
 
 	const titleCSS = {
@@ -199,7 +199,7 @@ const ProfileHeader = (props) => {
 	return (
 		<div style={css}>
 			<HeaderButton onClick={props.returnHome}>
-				&#8617;
+				&lang;
 			</HeaderButton>
 			<div style={titleCSS}>
 				EDIT PROFILE
@@ -233,6 +233,7 @@ const ProfileForm = (props) => {
 		position: 'relative',
 		display: 'block',
 		width: '80vw',
+		height: '4vh',
 		borderBottom: '1px solid lightgrey',
 	};
 
@@ -240,6 +241,8 @@ const ProfileForm = (props) => {
 		position: 'absolute',
 		right: '0',
 		width: '55vw',
+		height: '3vh',
+		fontSize: '2vh',
 		border: 'none',
 	};
 
@@ -270,7 +273,7 @@ const ProfileForm = (props) => {
 				<br />
 				<label style={labelCSS}>
 					Email
-					<input style={inputCSS} onChange={props.onChange} type="text" name="email" value={props.email} />
+					<input style={inputCSS} onChange={props.onChange} type="text" name="email" value={props.email.toLowerCase()} />
 				</label>
 			</form>
 		</div>
