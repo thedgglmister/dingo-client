@@ -9,12 +9,29 @@ import InvitationsPage from './dingo-redux-invitations'
 import GamePage from './dingo-redux-game'
 
 
+import Transition from 'react-transition-group/Transition'
+
+
 
 //presentational
 const CurrentPage = (props) => {
 	switch (props.pageName) {
 		case "HOME": 
-			return <HomePage />;
+			return ( //orig <HomePage />
+				<Transition in={true} timeout={5000}>
+{state => {
+              switch (state) {
+                case 'entering':
+                  return 'Entering…';
+                case 'entered':
+                  return 'Entered!';
+                case 'exiting':
+                  return 'Exiting…';
+                case 'exited':
+                  return 'Exited!';
+              }}}
+				</Transition>
+			);
 		case "INVITATIONS":
 			return <InvitationsPage />;
 		case "PROFILE":

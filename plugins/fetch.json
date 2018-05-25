@@ -31,10 +31,10 @@
     "is_top_level": false,
     "variables": {}
   },
-  "cordova-plugin-spinner": {
+  "cordova-plugin-native-spinner": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-spinner"
+      "id": "cordova-plugin-native-spinner"
     },
     "is_top_level": true,
     "variables": {}

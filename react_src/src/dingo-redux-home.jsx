@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as actions from './redux-action-creators'
 
@@ -13,7 +13,8 @@ const server_url = "https://dingo-test.herokuapp.com";
 
 const HomePage = (props) => {
 	return (
-		<div>
+		<div style={{transition: 'opacity 2000ms ease-in-out'}}>
+			{props.status}
 			<HomeHeader />
 			<NewGameButtonContainer />
 			<GamesListContainer />
@@ -174,6 +175,11 @@ class NewGameButtonContainer extends Component {
 	}
 
 	handleNewGameClick(e) {
+		alert(JSON.stringify(cordova));
+		alert(JSON.stringify(SpinnerDialog));
+		alert(JSON.stringify(SpinnerDialog.show));
+		SpinnerDialog.show(null, null, true);
+	/*
 		e.preventDefault();
 		fetch(
 			server_url + "/new_game", 
@@ -191,6 +197,7 @@ class NewGameButtonContainer extends Component {
 		).catch(
 			(error) => console.log("Network Error: " + error.message)//put in alert or errorMsg?
 		);
+	*/
 	}
 
 	render() {
@@ -412,6 +419,7 @@ const GamesListItemPlayers = (props) => {
 		width: '70vw',
 		overflow: 'scroll',
 		borderBottom: '1px solid lightgrey',
+		borderRight: '1px solid #e8e8e8',
 	};
 
 	const justYouCSS = {

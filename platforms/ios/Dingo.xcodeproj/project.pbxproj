@@ -23,8 +23,6 @@
 		1DF8181CC55744CBB85612D9 /* CDVLocalFilesystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 135EFD04A6194950B6E8DA23 /* CDVLocalFilesystem.m */; };
 		ECC8A1A5F1C54294B2D91054 /* CDVAssetLibraryFilesystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E26FE7673C947418440D921 /* CDVAssetLibraryFilesystem.m */; };
 		25EA88C3B531488EBA1FADED /* CDVFileTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F49D4A8B6F449F2ADA4BADE /* CDVFileTransfer.m */; };
-		94D2ECEF9DFC4DD8838F0403 /* SpinnerPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 294CC3430FBA4FE5A821DC76 /* SpinnerPlugin.m */; };
-		36AA5C124F4F4D3A9F4EC009 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D08BF7C430AD4D5E991A514A /* MBProgressHUD.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,10 +88,8 @@
 		254C8A566F8542398BF01C72 /* CDVAssetLibraryFilesystem.h */ = {isa = PBXFileReference; name = "CDVAssetLibraryFilesystem.h"; path = "cordova-plugin-file/CDVAssetLibraryFilesystem.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 		9F49D4A8B6F449F2ADA4BADE /* CDVFileTransfer.m */ = {isa = PBXFileReference; name = "CDVFileTransfer.m"; path = "cordova-plugin-file-transfer/CDVFileTransfer.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
 		3B4DD18DE6524AB891FB499D /* CDVFileTransfer.h */ = {isa = PBXFileReference; name = "CDVFileTransfer.h"; path = "cordova-plugin-file-transfer/CDVFileTransfer.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
-		294CC3430FBA4FE5A821DC76 /* SpinnerPlugin.m */ = {isa = PBXFileReference; name = "SpinnerPlugin.m"; path = "cordova-plugin-spinner/SpinnerPlugin.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
-		D08BF7C430AD4D5E991A514A /* MBProgressHUD.m */ = {isa = PBXFileReference; name = "MBProgressHUD.m"; path = "cordova-plugin-spinner/MBProgressHUD.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
-		2FF133C57415492DAA3A0932 /* SpinnerPlugin.h */ = {isa = PBXFileReference; name = "SpinnerPlugin.h"; path = "cordova-plugin-spinner/SpinnerPlugin.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
-		28B9005CDDBC4312AFD8280C /* MBProgressHUD.h */ = {isa = PBXFileReference; name = "MBProgressHUD.h"; path = "cordova-plugin-spinner/MBProgressHUD.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		ABC77B5B2B36457DAA922652 /* CDVSpinnerDialog.m */ = {isa = PBXFileReference; name = "CDVSpinnerDialog.m"; path = "cordova-plugin-spinner-dialog/CDVSpinnerDialog.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		00D6E5097D8348AC85AD5C2A /* CDVSpinnerDialog.h */ = {isa = PBXFileReference; name = "CDVSpinnerDialog.h"; path = "cordova-plugin-spinner-dialog/CDVSpinnerDialog.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,10 +215,8 @@
 				254C8A566F8542398BF01C72 /* CDVAssetLibraryFilesystem.h */,
 				9F49D4A8B6F449F2ADA4BADE /* CDVFileTransfer.m */,
 				3B4DD18DE6524AB891FB499D /* CDVFileTransfer.h */,
-				294CC3430FBA4FE5A821DC76 /* SpinnerPlugin.m */,
-				D08BF7C430AD4D5E991A514A /* MBProgressHUD.m */,
-				2FF133C57415492DAA3A0932 /* SpinnerPlugin.h */,
-				28B9005CDDBC4312AFD8280C /* MBProgressHUD.h */,
+				ABC77B5B2B36457DAA922652 /* CDVSpinnerDialog.m */,
+				00D6E5097D8348AC85AD5C2A /* CDVSpinnerDialog.h */,
 			);
 			name = Plugins;
 			path = Dingo/Plugins;
@@ -357,8 +351,7 @@
 				1DF8181CC55744CBB85612D9 /* CDVLocalFilesystem.m in Sources */,
 				ECC8A1A5F1C54294B2D91054 /* CDVAssetLibraryFilesystem.m in Sources */,
 				25EA88C3B531488EBA1FADED /* CDVFileTransfer.m in Sources */,
-				94D2ECEF9DFC4DD8838F0403 /* SpinnerPlugin.m in Sources */,
-				36AA5C124F4F4D3A9F4EC009 /* MBProgressHUD.m in Sources */,
+				26576D308B96439E9CE83AD5 /* CDVSpinnerDialog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

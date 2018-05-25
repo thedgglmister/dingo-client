@@ -9,7 +9,7 @@ import CurrentPage from './dingo-redux-currentpage'
 
 import * as actions from './redux-action-creators'
 
-localStorage.removeItem('userId'); //temp
+//localStorage.removeItem('userId'); //temp
 
 //statusBar.hide(); figure out how to use this plugin
 
@@ -20,10 +20,9 @@ localStorage.removeItem('userId'); //temp
 class App extends Component { 
 
 	componentDidMount() {
-		const storedId = localStorage.getItem('userId');
-		if (storedId != null) {
+		if (this.props.userId != null) {
+			this.props.initCurrentPlayer(this.props.userId);
 			this.props.goToSplash();
-			this.props.updateUserId(parseInt(storedId));
 		}
 	}
 
@@ -38,6 +37,7 @@ class App extends Component {
 
 const mapStateToAppProps = (state) => ({
 	currentPage: state.currentPage,
+	userId: state.userId,
 });
 
 const mapDispatchToAppProps = (dispatch) => ({
@@ -46,9 +46,9 @@ const mapDispatchToAppProps = (dispatch) => ({
 			actions.changePage("SPLASH")
 		);
 	},
-	updateUserId: (userId) => {
+	initCurrentPlayer: (userId) => {
 		dispatch(
-			actions.updateUserId(userId)
+			actions.changePlayer(userId)
 		);
 	},
 });
@@ -68,7 +68,11 @@ App = connect(mapStateToAppProps, mapDispatchToAppProps)(App);
 //main
 
 render( 
-	<Provider store={createStore(dingoReducer)}>
+	<Provider 
+		store={createStore(dingoReducer, {
+			userId: localStorage.getItem('userId') ? parseInt(localStorage.getItem('userId')) : null
+		})}
+	>
 		<App />
 	</Provider>,
 	document.getElementById('root')

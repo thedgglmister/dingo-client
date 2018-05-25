@@ -49,7 +49,6 @@ class SplashContainer extends Component {
 			(data) => {
 				const timeElapsed = Date.now() - startTime
 				setTimeout(() => {
-					//DISPATCH ALL DATA TO STATE
 					this.props.addAllData(data);
 					this.props.goToHomePage();
 				}, 1000 - timeElapsed);

@@ -200,14 +200,16 @@ LoginFormContainer = connect(null, mapDispatchToLoginFormContainerProps)(LoginFo
 const LoginForm = (props) => {
 
 	const LoginCSS = {
-		display: 'block',
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'center',
+		textAlign: 'center',
 		backgroundColor: 'steelblue',
 		color: 'white',
-		width: '20vw',
-		height: '3vh',
+		width: '25vw',
+		height: '6vh',
 		borderRadius: '5px',
 		margin: '10px auto',
-		padding: '4px',
 	};
 
 	const errorCSS = {

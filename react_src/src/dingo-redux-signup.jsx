@@ -33,7 +33,7 @@ const SignUpHeader = (props) => { //presentational
 		textAlign: 'center',
 		position: 'relative',
 		fontSize: '5vh',
-		borderBottom: '1px solid #264662'
+		borderBottom: '1px solid #264662',
 	};
 
 	return (
@@ -297,14 +297,16 @@ const UserInfoForm = (props) => {
 	};
 
 	const nextCSS = {
-		display: 'block',
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'center',
+		textAlign: 'center',
 		backgroundColor: 'steelblue',
 		color: 'white',
-		width: '20vw',
-		height: '3vh',
+		width: '25vw',
+		height: '6vh',
 		borderRadius: '5px',
 		margin: '10px auto',
-		padding: '4px',
 	};
 
 	return (

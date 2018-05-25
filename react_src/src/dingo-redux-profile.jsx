@@ -32,6 +32,13 @@ const mapDispatchToProfilePageProps = (dispatch) => ({
 		dispatch(
 			actions.updateProfiles(newProfile)
 		);
+	},
+	signOut: (e) => {
+		e.preventDefault();
+		localStorage.removeItem('userId');
+		dispatch(
+			actions.clearState(null)
+		);
 	}
 });
 
@@ -165,6 +172,7 @@ class ProfilePage extends Component {
 					onChange={this.handleInputChange}
 					handlePhotoClick={this.handlePhotoClick}
 					temp_handle_img_change={this.temp_handle_img_change}
+					signOut={this.props.signOut}
 				/>
 			</div>
 		);
@@ -202,7 +210,7 @@ const ProfileHeader = (props) => {
 				&lang;
 			</HeaderButton>
 			<div style={titleCSS}>
-				EDIT PROFILE
+				PROFILE
 			</div>
 			<HeaderButton onClick={props.save ? props.saveProfile : null}>
 				<span style={saveCSS}>Save</span>
@@ -220,7 +228,7 @@ const ProfileForm = (props) => {
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
-		padding: '15vw',
+		paddingTop: '7vh',
 	};
 
 	const imgCSS = {
@@ -252,6 +260,13 @@ const ProfileForm = (props) => {
 		textAlign: 'center',
 	};
 
+	const signOutCSS = {
+		position: 'absolute',
+		bottom: '7vh',
+		color: 'steelblue',
+		//textDecoration: 'underline',
+	};
+
 
 	return (
 		<div style={css}>
@@ -276,6 +291,9 @@ const ProfileForm = (props) => {
 					<input style={inputCSS} onChange={props.onChange} type="text" name="email" value={props.email.toLowerCase()} />
 				</label>
 			</form>
+			<a style={signOutCSS} onClick={props.signOut}>
+				Sign Out
+			</a>
 		</div>
 	);
 }

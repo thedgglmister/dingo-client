@@ -26,20 +26,22 @@ const ProfilePhotoForm = (props) => {
 	};
 
 	const signupCSS = {
-		display: 'block',
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'center',
+		textAlign: 'center',
 		backgroundColor: 'steelblue',
 		color: 'white',
-		width: '20vw',
-		height: '3vh',
+		width: '25vw',
+		height: '6vh',
 		borderRadius: '5px',
 		margin: '10px auto',
-		padding: '4px',
 	};
 
 	return (
 		<form>
 			<img style={imgCSS} src={props.img} onClick={props.handlePhotoClick}/>
-			<p>Upload Profile Picture</p>
+			<p>Upload a profile photo</p>
 			<input id="testtt" style={{opacity: '0'}} name="img" type="file" accept="image/*" onChange={(e) => { //temp
 				if (e.target.files[0]) {
 					const reader = new FileReader();

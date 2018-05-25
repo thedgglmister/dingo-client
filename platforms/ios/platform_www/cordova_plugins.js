@@ -222,11 +222,11 @@ module.exports = [
     ]
   },
   {
-    "id": "cordova-plugin-spinner.SpinnerPlugin",
-    "file": "plugins/cordova-plugin-spinner/www/spinner-plugin.js",
-    "pluginId": "cordova-plugin-spinner",
+    "id": "cordova-plugin-native-spinner.SpinnerDialog",
+    "file": "plugins/cordova-plugin-native-spinner/www/SpinnerDialog.js",
+    "pluginId": "cordova-plugin-native-spinner",
     "clobbers": [
-      "SpinnerPlugin"
+      "SpinnerDialog"
     ]
   }
 ];
@@ -237,7 +237,7 @@ module.exports.metadata =
   "cordova-plugin-camera": "4.0.3",
   "cordova-plugin-file": "6.0.1",
   "cordova-plugin-file-transfer": "1.7.1",
-  "cordova-plugin-spinner": "1.1.0"
+  "cordova-plugin-native-spinner": "1.1.3"
 };
 // BOTTOM OF METADATA
 });

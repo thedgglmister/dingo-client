@@ -6,6 +6,15 @@ const currentPage = (state = "SIGNUP", action) => {
 			return action.pageName;
 		case "GO_TO_GAME":
 			return "GAME";
+		case "UPDATE_USER_ID":
+			if (action.userId == null) {
+				return "LOGIN";
+			}
+			else {
+				return state;
+			}
+		case "CLEAR_STATE":
+			return "LOGIN";
 		default:
 			return state;
 	}
@@ -15,6 +24,8 @@ const currentGame = (state = null, action) => {
 	switch (action.type) {
 		case "GO_TO_GAME":
 			return action.gameId;
+		case "CLEAR_STATE":
+			return null;
 		default:
 			return state;
 	}
@@ -25,6 +36,8 @@ const currentPlayer = (state = null, action) => {
 		case "CHANGE_PLAYER":
 		case "UPDATE_USER_ID":
 			return action.userId;
+		case "CLEAR_STATE":
+			return null;
 		default:
 			return state;
 	}
@@ -34,6 +47,8 @@ const userId = (state = null, action) => {
 	switch (action.type) {
 		case "UPDATE_USER_ID":
 			return action.userId;
+		case "CLEAR_STATE":
+			return null;
 		default:
 			return state;
 	}
@@ -46,6 +61,8 @@ const profiles = (state = {}, action) => {
 			return Object.assign({}, state, action.profiles);
 		case "UPDATE_PROFILES":
 			return Object.assign({}, state, action.newProfiles);
+		case "CLEAR_STATE":
+			return {};
 		default:
 			return state;
 	}
@@ -58,6 +75,8 @@ const invs = (state = [], action) => {
 		case "ACCEPT_INV":
 		case "DECLINE_INV":
 			return action.invs;
+		case "CLEAR_STATE":
+			return [];
 		default:
 			return state;
 	}	
@@ -73,6 +92,8 @@ const games = (state = [], action) => {
 			return state.filter(
 				(game) => (game.gameId != action.gameId)
 			);
+		case "CLEAR_STATE":
+			return [];
 		default:
 			return state;
 	}	
@@ -94,6 +115,8 @@ const matches = (state = {}, action) => {
 			myUpdatedMatches[action.userId] = state[action.gameId][action.userId].concat([action.index]);
 			updatedGameMatches[action.gameId] = Object.assign({}, state[action.gameId], myUpdatedMatches);
 			return Object.assign({}, state, updatedGameMatches);
+		case "CLEAR_STATE":
+			return {};
 		default:
 			return state;
 	}	
@@ -109,6 +132,8 @@ const players = (state = {}, action) => {
 			const copy = Object.assign({}, state);
 			delete copy[action.gameId];
 			return copy;
+		case "CLEAR_STATE":
+			return {};
 		default:
 			return state;
 	}	
@@ -131,6 +156,8 @@ const nots = (state = {}, action) => {
 				(not) => Object.assign({}, not, {read: true})
 			);
 			return Object.assign({}, state, updatedNots);
+		case "CLEAR_STATE":
+			return {};
 		default:
 			return state;
 	}	
@@ -141,6 +168,8 @@ const topPlayers = (state = [], action) => {
 		case "ADD_ALL_DATA":
 		case "ACCEPT_INV":
 			return action.topPlayers;
+		case "CLEAR_STATE":
+			return [];
 		default:
 			return state;
 	}	
@@ -153,6 +182,8 @@ const otherPlayers = (state = null, action) => {
 		case "UPDATE_PATTERN":
 		case "TOGGLE_ADD_PLAYERS":
 			return null;
+		case "CLEAR_STATE":
+			return null;
 		default:
 			return state;
 	}
@@ -162,6 +193,8 @@ const notsMenuOpen = (state = false, action) => {
 	switch (action.type) {
 		case "TOGGLE_NOTS":
 			return !state;
+		case "CLEAR_STATE":
+			return false;
 		default:
 			return state;
 	}
@@ -171,6 +204,8 @@ const addPlayerMenuOpen = (state = false, action) => {
 	switch (action.type) {
 		case "TOGGLE_ADD_PLAYERS":
 			return !state;
+		case "CLEAR_STATE":
+			return false;
 		default:
 			return state;
 	}
@@ -181,6 +216,8 @@ const pattern = (state = "", action) => {
 		case "UPDATE_PATTERN":
 			return action.pattern;
 		case "TOGGLE_ADD_PLAYERS":
+			return "";
+		case "CLEAR_STATE":
 			return "";
 		default:
 			return state;
@@ -206,46 +243,3 @@ const appReducer = combineReducers({
 });
 
 export default appReducer;
-
-
-
-
-
-/*
-actions
-
-{
-	type: "CHANGE_PAGE",
-	page: <string>
-}
-
-
-
-
-state = {
-
-	currentPage = enum['HOME', 'INVITATIONS', 'PROFILE', 'GAME', 'SIGN_UP', 'LOG_IN', 'SPLASH']
-
-	addPlayersMenuOpen = false
-
-	notificationsMenuOpen = false
-
-	games = [gameData1, ]
-
-	invitations = [invitationData1, ]
-
-	profile = {}
-
-
-
-
-
-	top_players?
-
-	other players?
-}
-
-
-
-
-*/

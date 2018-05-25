@@ -16,7 +16,7 @@ export const addAllData = (data) => ({
 	players: data.players,
 	matches: data.matches,
 	topPlayers: data.topPlayers,
-	profiles: data.allProfs
+	profiles: data.profiles,
 });
 
 export const newGame = (games, players, matches, nots) => ({
@@ -57,7 +57,7 @@ export const acceptInv = (data) => ({
 	players: data.players,
 	topPlayers: data.topPlayers,
 	nots: data.nots,
-	profiles: data.profs,
+	profiles: data.profiles,
 	invs: data.invs,
 });
 
@@ -91,5 +91,9 @@ export const updateMatches = (gameId, userId, index) => ({
 	gameId: gameId,
 	userId: userId,
 	index: index,
-})
+});
+
+export const clearState = () => ({
+	type: "CLEAR_STATE",
+});
 

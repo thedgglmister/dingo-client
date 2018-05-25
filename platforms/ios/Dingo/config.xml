@@ -29,8 +29,8 @@
     <feature name="FileTransfer">
         <param name="ios-package" value="CDVFileTransfer" />
     </feature>
-    <feature name="SpinnerPlugin">
-        <param name="ios-package" value="SpinnerPlugin" />
+    <feature name="SpinnerDialog">
+        <param name="ios-package" value="CDVSpinnerDialog" />
     </feature>
     <name>Dingo</name>
     <description>

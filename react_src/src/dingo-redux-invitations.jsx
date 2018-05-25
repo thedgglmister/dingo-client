@@ -89,17 +89,18 @@ const mapStateToInvitationsListProps = (state) => ({
 			img: state.profiles[inv.fromId].img,
 		})
 	),
+	userId: state.userId,
 });
 
 const mapDispatchToInvitationsListProps = (dispatch) => ({
-	acceptInv: (invId, data) => {
+	acceptInv: (data) => {
 		dispatch(
-			actions.acceptInv(invId, data)
+			actions.acceptInv(data)
 		);
 	},
-	declineInv: (invId) => {
+	declineInv: (invs) => {
 		dispatch(
-			actions.declineInv(invId)
+			actions.declineInv(invs)
 		);
 	}
 });
@@ -121,7 +122,10 @@ class InvitationsListContainer extends Component {
 			server_url + "/accept_invite", 
 			{
 				method: 'POST',
-				body: JSON.stringify({invId: invId}),
+				body: JSON.stringify({
+					invId: invId, 
+					userId: this.props.userId,
+				}),
 				headers: {
 					'Content-Type': 'application/json',
 				},
